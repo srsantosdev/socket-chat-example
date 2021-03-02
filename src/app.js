@@ -10,13 +10,18 @@ app.get('/', (request, response) => {
 io.on('connection', (socket) => {
   console.log('Usuário conectado!')
 
-  socket.on('chat message', (message) => {
-    console.log('Mensagem: ' + message)
+  socket.on('chat', (chat) => {
+    console.log('Mensagem: ', chat)
   })
+
+  socket.on('chat', (chat) => {
+    io.emit('chat', chat);
+  });
 
   socket.on('disconnect', () => {
     console.log('Usuário desconectado!')
   })
 })
+
 
 http.listen(3333, () => console.log('Listening on port 3333'))
